@@ -14,21 +14,21 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class IntegrationUtil {
 
+    private IntegrationUtil() {
+    }
+
     private static final Logger log = LoggerFactory.getLogger(IntegrationUtil.class);
 
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static <T> HttpEntity<T> setRequestEntity(T dto){
-        return new HttpEntity<T>(dto, setHeaders());
+        return new HttpEntity<>(dto, setHeaders());
     }
 
     private static <T> HttpEntity<T> setRequestEntity(T dto, HttpHeaders customHeaders){
-        return new HttpEntity<T>(dto, customHeaders);
+        return new HttpEntity<>(dto, customHeaders);
     }
 
     public static HttpHeaders setHeaders() {
@@ -43,7 +43,7 @@ public class IntegrationUtil {
         try {
             return objectMapper.writeValueAsString(dto);
         } catch (JsonProcessingException e) {
-            log.error("Erro ao converter "+ dto.getClass().getSimpleName() + " para JSON: {}", e.getMessage());
+            log.error("Erro ao converter {} para JSON: {}",dto.getClass().getSimpleName(), e.getMessage());
             throw new IntegrationException("Erro ao converter "+ dto.getClass().getSimpleName() + " para JSON", 500);
         }
     }
@@ -74,13 +74,13 @@ public class IntegrationUtil {
 
     public static <T> T getForObject(String url, TypeReference<T> response){
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> getObject = new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        ResponseEntity<String> getObject;
         try {
             getObject = restTemplate.getForEntity(url, String.class);
-        } catch (Exception e) {
-            if (e instanceof HttpClientErrorException.NotFound) {
-                throw new IntegrationException("Não encontrado registro para "+url, 404);
-            }
+        } catch(HttpClientErrorException.NotFound e) {
+            throw new IntegrationException("Não encontrado registro para " + url, 404);
+        } catch(Exception e) {
+            throw new IntegrationException("Erro na integração com " + url + " - " + e.getMessage(), 500);
         }
         if (getObject.getStatusCode() == HttpStatus.OK) {
             return getIntegrationContentList(getObject.getBody(), response);
@@ -91,13 +91,14 @@ public class IntegrationUtil {
 
     public static <T> T getForObject(String url, Class<T> response){
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> getObject = new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        ResponseEntity<String> getObject;
         try {
             getObject = restTemplate.getForEntity(url, String.class);
-        } catch (Exception e) {
-            if (e instanceof HttpClientErrorException.NotFound) {
-                throw new IntegrationException("Não encontrado registro para "+url, 404);
-            }
+        } catch(HttpClientErrorException.NotFound e) {
+            throw new IntegrationException("Não encontrado registro para " + url, 404);
+        } catch(Exception e) {
+            throw new IntegrationException("Erro na integração com " + url + " - " + e.getMessage(), 500);
         }
         if (getObject.getStatusCode() == HttpStatus.OK) {
             return getIntegrationContent(getObject.getBody(), response);

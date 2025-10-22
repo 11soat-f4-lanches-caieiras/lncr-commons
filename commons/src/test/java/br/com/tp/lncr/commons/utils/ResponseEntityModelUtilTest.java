@@ -26,8 +26,8 @@ class ResponseEntityModelUtilTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("CustomValue", response.getHeaders().getFirst("Custom-Header"));
         assertNotNull(response.getBody());
-        assertEquals("Teste", response.getBody().get_content());
-        assertNotNull(response.getBody().get_response());
+        assertEquals("Teste", response.getBody().getContent());
+        assertNotNull(response.getBody().getResponse());
     }
 
     @Test
@@ -38,40 +38,40 @@ class ResponseEntityModelUtilTest {
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(123, response.getBody().get_content());
+        assertEquals(123, response.getBody().getContent());
     }
 
     @Test
-    void deveRetornarOKComCorpoValido() {
+    void deveRetornarOkComCorpoValido() {
         String body = "Sucesso";
 
-        ResponseEntity<ResponseModel<String>> response = ResponseEntityModelUtil.OK(body);
+        ResponseEntity<ResponseModel<String>> response = ResponseEntityModelUtil.ok(body);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals("Sucesso", response.getBody().get_content());
-        assertNotNull(response.getBody().get_response());
+        assertEquals("Sucesso", response.getBody().getContent());
+        assertNotNull(response.getBody().getResponse());
     }
 
     @Test
-    void deveRetornarOKComCorpoNulo() {
-        ResponseEntity<ResponseModel<String>> response = ResponseEntityModelUtil.OK(null);
+    void deveRetornarOkComCorpoNulo() {
+        ResponseEntity<ResponseModel<String>> response = ResponseEntityModelUtil.ok(null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertNull(response.getBody().get_content());
+        assertNull(response.getBody().getContent());
     }
 
     @Test
     void deveRetornarAcceptedComCorpoValido() {
         String body = "Aceito";
 
-        ResponseEntity<ResponseModel<String>> response = ResponseEntityModelUtil.Accepted(body);
+        ResponseEntity<ResponseModel<String>> response = ResponseEntityModelUtil.accepted(body);
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals("Aceito", response.getBody().get_content());
-        assertNotNull(response.getBody().get_response());
+        assertEquals("Aceito", response.getBody().getContent());
+        assertNotNull(response.getBody().getResponse());
     }
 
     @Test
@@ -84,7 +84,7 @@ class ResponseEntityModelUtilTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(location, response.getHeaders().getFirst("Location"));
         assertNotNull(response.getBody());
-        assertEquals("Criado", response.getBody().get_content());
+        assertEquals("Criado", response.getBody().getContent());
     }
 
     @Test
@@ -96,55 +96,55 @@ class ResponseEntityModelUtilTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNull(response.getHeaders().getFirst("Location"));
         assertNotNull(response.getBody());
-        assertEquals("Criado sem location", response.getBody().get_content());
+        assertEquals("Criado sem location", response.getBody().getContent());
     }
 
     @Test
-    void deveRetornarListOKComListaValida() {
+    void deveRetornarListOkComListaValida() {
         List<String> body = Arrays.asList("Item1", "Item2", "Item3");
 
         ResponseEntity<ResponseListModel<String>> response = ResponseEntityModelUtil.listOK(body);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(3, response.getBody().get_content().size());
-        assertEquals("Item1", response.getBody().get_content().get(0));
-        assertEquals("Item2", response.getBody().get_content().get(1));
-        assertEquals("Item3", response.getBody().get_content().get(2));
-        assertNotNull(response.getBody().get_response());
+        assertEquals(3, response.getBody().getContent().size());
+        assertEquals("Item1", response.getBody().getContent().get(0));
+        assertEquals("Item2", response.getBody().getContent().get(1));
+        assertEquals("Item3", response.getBody().getContent().get(2));
+        assertNotNull(response.getBody().getResponse());
     }
 
     @Test
-    void deveRetornarListOKComListaVazia() {
+    void deveRetornarListOkComListaVazia() {
         List<String> body = Collections.emptyList();
 
         ResponseEntity<ResponseListModel<String>> response = ResponseEntityModelUtil.listOK(body);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody().get_content().isEmpty());
-        assertNotNull(response.getBody().get_response());
+        assertTrue(response.getBody().getContent().isEmpty());
+        assertNotNull(response.getBody().getResponse());
     }
 
     @Test
-    void deveRetornarListOKComListaNula() {
+    void deveRetornarListOkComListaNula() {
         ResponseEntity<ResponseListModel<String>> response = ResponseEntityModelUtil.listOK(null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertNull(response.getBody().get_content());
+        assertNull(response.getBody().getContent());
     }
 
     @Test
     void devePreservarTipoGenericoEmResponseModel() {
         Integer numero = 42;
 
-        ResponseEntity<ResponseModel<Integer>> response = ResponseEntityModelUtil.OK(numero);
+        ResponseEntity<ResponseModel<Integer>> response = ResponseEntityModelUtil.ok(numero);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertInstanceOf(Integer.class, response.getBody().get_content());
-        assertEquals(42, response.getBody().get_content());
+        assertInstanceOf(Integer.class, response.getBody().getContent());
+        assertEquals(42, response.getBody().getContent());
     }
 
     @Test
@@ -155,7 +155,7 @@ class ResponseEntityModelUtilTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertInstanceOf(Integer.class, response.getBody().get_content().get(0));
-        assertEquals(3, response.getBody().get_content().size());
+        assertInstanceOf(Integer.class, response.getBody().getContent().getFirst());
+        assertEquals(3, response.getBody().getContent().size());
     }
 }

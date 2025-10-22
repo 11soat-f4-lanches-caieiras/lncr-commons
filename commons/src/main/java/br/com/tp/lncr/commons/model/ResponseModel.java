@@ -16,11 +16,11 @@ public class ResponseModel<T> {
         this._content = content;
     }
 
-    public ResponseMetadata get_response() {
+    public ResponseMetadata getResponse() {
         return _response;
     }
 
-    public T get_content() {
+    public T getContent() {
         return _content;
     }
 

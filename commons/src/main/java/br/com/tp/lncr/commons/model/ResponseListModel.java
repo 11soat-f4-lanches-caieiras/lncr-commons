@@ -18,11 +18,11 @@ public class ResponseListModel<T> {
         this._content = _content;
     }
 
-    public ResponseMetadata get_response() {
+    public ResponseMetadata getResponse() {
         return _response;
     }
 
-    public List<T> get_content() {
+    public List<T> getContent() {
         return _content;
     }
 }

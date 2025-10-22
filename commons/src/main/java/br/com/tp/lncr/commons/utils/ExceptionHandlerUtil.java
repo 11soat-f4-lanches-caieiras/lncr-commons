@@ -13,6 +13,10 @@ public class ExceptionHandlerUtil {
 
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandlerUtil.class);
 
+    private ExceptionHandlerUtil() {
+        // Construtor padrão
+    }
+
     public static ResponseEntity<Object> handleException(String message, int code, Throwable throwable) {
         if (throwable != null) {
             log.error("Exceção lançada por: {}.{} - Mensagem: {}",

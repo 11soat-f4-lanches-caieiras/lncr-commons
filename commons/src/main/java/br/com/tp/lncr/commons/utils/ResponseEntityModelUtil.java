@@ -10,17 +10,20 @@ import java.util.List;
 
 public class ResponseEntityModelUtil {
 
+    private ResponseEntityModelUtil() {
+    }
+
     public static <T> ResponseEntity<ResponseModel<T>> response(T body, HttpStatus httpStatus, HttpHeaders httpHeaders) {
         return ResponseEntity.status(httpStatus)
                 .headers(httpHeaders)
                 .body(new ResponseModel<>(body));
     }
 
-    public static <T> ResponseEntity<ResponseModel<T>> OK(T body) {
+    public static <T> ResponseEntity<ResponseModel<T>> ok(T body) {
         return response(body, HttpStatus.OK, null);
     }
 
-    public static <T> ResponseEntity<ResponseModel<T>> Accepted(T body) {
+    public static <T> ResponseEntity<ResponseModel<T>> accepted(T body) {
         return response(body, HttpStatus.ACCEPTED, null);
     }
 
