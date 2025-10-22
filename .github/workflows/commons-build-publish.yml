@@ -115,7 +115,7 @@ jobs:
     needs: build
     name: Publicar lncr-commons no GitHub Packages e criar Release
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master') ||
+    if: github.event.pull_request.merged == true || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master')
 
     steps:
       - name: Fazer checkout do repositório
