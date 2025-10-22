@@ -109,6 +109,9 @@ public class IntegrationUtil {
 
 
     public static <T> T getIntegrationContent(String body, Class<T> classType){
+        if (body == null || body.isEmpty()) {
+            throw new IntegrationException("Erro ao mapear conteúdo na integração: corpo nulo",500);
+        }
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
         try {
@@ -121,6 +124,9 @@ public class IntegrationUtil {
     }
 
     public static <T> T getIntegrationContentList(String body, TypeReference<T> typeReference){
+        if (body == null || body.isEmpty()) {
+            throw new IntegrationException("Erro ao mapear conteúdo na integração: corpo nulo",500);
+        }
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
         try {

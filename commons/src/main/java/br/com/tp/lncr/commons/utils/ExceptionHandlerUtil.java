@@ -36,6 +36,8 @@ public class ExceptionHandlerUtil {
             case 404 -> HttpStatus.NOT_FOUND;
             case 409 -> HttpStatus.CONFLICT;
             case 500 -> HttpStatus.INTERNAL_SERVER_ERROR;
+            case 503 -> HttpStatus.SERVICE_UNAVAILABLE;
+            case 504 -> HttpStatus.GATEWAY_TIMEOUT;
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
         };
     }
