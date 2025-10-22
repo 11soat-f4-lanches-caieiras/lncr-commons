@@ -2,7 +2,6 @@ package br.com.tp.lncr.commons.integrations.customer;
 
 import br.com.tp.lncr.commons.utils.IntegrationUtil;
 import br.com.tp.lncr.commons.config.IntegrationConfig;
-import br.com.tp.lncr.commons.integrations.CustomerIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.IntegrationMapper;
 import br.com.tp.lncr.core.dtos.customer.CustomerDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderCustomerDTO;
@@ -14,6 +13,7 @@ import org.mockito.MockedStatic;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -166,7 +166,7 @@ class CustomerIntegrationImplTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
-            assertEquals("Ana Costa", result.get(0).getName());
+            assertEquals("Ana Costa", result.getFirst().getName());
             verify(integrationMapper).toCustomerOrderCustomerDTO(any(CustomerDTO.class));
             mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://customer-service/1"), any(TypeReference.class)));
         }
@@ -196,7 +196,7 @@ class CustomerIntegrationImplTest {
 
             assertNotNull(result);
             assertEquals(2, result.size());
-            assertTrue(result.stream().allMatch(customer -> customer == null));
+            assertTrue(result.stream().allMatch(Objects::isNull));
             verify(integrationMapper, times(2)).toCustomerOrderCustomerDTO(any(CustomerDTO.class));
             mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://customer-service/1,2"), any(TypeReference.class)));
         }

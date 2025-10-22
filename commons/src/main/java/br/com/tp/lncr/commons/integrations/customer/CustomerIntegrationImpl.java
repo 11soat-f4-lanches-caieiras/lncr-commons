@@ -1,5 +1,6 @@
-package br.com.tp.lncr.commons.integrations;
+package br.com.tp.lncr.commons.integrations.customer;
 
+import br.com.tp.lncr.commons.integrations.IntegrationMapper;
 import br.com.tp.lncr.commons.utils.IntegrationUtil;
 import br.com.tp.lncr.commons.config.IntegrationConfig;
 import br.com.tp.lncr.core.dtos.customer.CustomerDTO;

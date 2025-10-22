@@ -21,7 +21,7 @@ class ResponseListModelTest {
         assertEquals(metadata, response.get_response());
         assertEquals(content, response.get_content());
         assertEquals(3, response.get_content().size());
-        assertEquals("Item1", response.get_content().get(0));
+        assertEquals("Item1", response.get_content().getFirst());
     }
 
     @Test
@@ -33,8 +33,8 @@ class ResponseListModelTest {
         assertNotNull(response.get_response());
         assertEquals(content, response.get_content());
         assertEquals(2, response.get_content().size());
-        assertNotNull(response.get_response().get_traceId());
-        assertNotNull(response.get_response().get_timestamp());
+        assertNotNull(response.get_response().getTraceId());
+        assertNotNull(response.get_response().getTimestamp());
     }
 
     @Test
@@ -42,11 +42,11 @@ class ResponseListModelTest {
         List<String> content = Collections.emptyList();
 
         ResponseListModel<String> response = new ResponseListModel<>(content);
-
+        int responseSize = response.get_content().size();
         assertNotNull(response.get_response());
         assertEquals(content, response.get_content());
         assertTrue(response.get_content().isEmpty());
-        assertEquals(0, response.get_content().size());
+        assertEquals(0, responseSize);
     }
 
     @Test
@@ -78,9 +78,9 @@ class ResponseListModelTest {
         ResponseListModel<String> response = new ResponseListModel<>(metadata, content);
 
         assertSame(metadata, response.get_response());
-        assertEquals("txn-456", response.get_response().get_traceId());
-        assertEquals("2023-07-21T11:00:00Z", response.get_response().get_timestamp());
-        assertEquals("Dados listados", response.get_response().get_message());
+        assertEquals("txn-456", response.get_response().getTraceId());
+        assertEquals("2023-07-21T11:00:00Z", response.get_response().getTimestamp());
+        assertEquals("Dados listados", response.get_response().getMessage());
     }
 
     @Test
@@ -117,8 +117,8 @@ class ResponseListModelTest {
 
         ResponseListModel<String> response = new ResponseListModel<>(content);
 
-        assertNotNull(response.get_response().get_timestamp());
-        assertFalse(response.get_response().get_timestamp().isEmpty());
+        assertNotNull(response.get_response().getTimestamp());
+        assertFalse(response.get_response().getTimestamp().isEmpty());
     }
 
     @Test
@@ -129,8 +129,8 @@ class ResponseListModelTest {
         ResponseListModel<String> response1 = new ResponseListModel<>(lista1);
         ResponseListModel<String> response2 = new ResponseListModel<>(lista2);
 
-        assertNotEquals(response1.get_response().get_traceId(),
-                       response2.get_response().get_traceId());
+        assertNotEquals(response1.get_response().getTraceId(),
+                       response2.get_response().getTraceId());
     }
 
     @Test
@@ -150,6 +150,6 @@ class ResponseListModelTest {
 
         assertNotNull(response.get_response());
         assertEquals(1, response.get_content().size());
-        assertEquals("ÚnicoItem", response.get_content().get(0));
+        assertEquals("ÚnicoItem", response.get_content().getFirst());
     }
 }

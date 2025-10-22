@@ -17,9 +17,9 @@ class ExceptionHandlerUtilTest {
         assertNotNull(response.getBody());
         assertInstanceOf(ResponseMetadata.class, response.getBody());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
-        assertEquals("Erro de validação", metadata.get_message());
-        assertNotNull(metadata.get_traceId());
-        assertNotNull(metadata.get_timestamp());
+        assertEquals("Erro de validação", metadata.getMessage());
+        assertNotNull(metadata.getTraceId());
+        assertNotNull(metadata.getTimestamp());
     }
 
     @Test
@@ -29,7 +29,7 @@ class ExceptionHandlerUtilTest {
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
         assertNotNull(metadata);
-        assertEquals("Não autorizado", metadata.get_message());
+        assertEquals("Não autorizado", metadata.getMessage());
     }
 
     @Test
@@ -39,7 +39,7 @@ class ExceptionHandlerUtilTest {
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
         assertNotNull(metadata);
-        assertEquals("Acesso negado", metadata.get_message());
+        assertEquals("Acesso negado", metadata.getMessage());
     }
 
     @Test
@@ -48,7 +48,8 @@ class ExceptionHandlerUtilTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
-        assertEquals("Recurso não encontrado", metadata.get_message());
+        assertNotNull(metadata);
+        assertEquals("Recurso não encontrado", metadata.getMessage());
     }
 
     @Test
@@ -57,7 +58,8 @@ class ExceptionHandlerUtilTest {
 
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
-        assertEquals("Conflito de dados", metadata.get_message());
+        assertNotNull(metadata);
+        assertEquals("Conflito de dados", metadata.getMessage());
     }
 
     @Test
@@ -66,7 +68,8 @@ class ExceptionHandlerUtilTest {
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
-        assertEquals("Erro interno", metadata.get_message());
+        assertNotNull(metadata);
+        assertEquals("Erro interno", metadata.getMessage());
     }
 
     @Test
@@ -75,7 +78,8 @@ class ExceptionHandlerUtilTest {
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
-        assertEquals("Erro desconhecido", metadata.get_message());
+        assertNotNull(metadata);
+        assertEquals("Erro desconhecido", metadata.getMessage());
     }
 
     @Test
@@ -86,7 +90,8 @@ class ExceptionHandlerUtilTest {
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
-        assertEquals("Mensagem de erro", metadata.get_message());
+        assertNotNull(metadata);
+        assertEquals("Mensagem de erro", metadata.getMessage());
     }
 
     @Test
@@ -97,7 +102,9 @@ class ExceptionHandlerUtilTest {
         ResponseMetadata metadata1 = (ResponseMetadata) response1.getBody();
         ResponseMetadata metadata2 = (ResponseMetadata) response2.getBody();
 
-        assertNotEquals(metadata1.get_traceId(), metadata2.get_traceId());
+        assertNotNull(metadata1);
+        assertNotNull(metadata2);
+        assertNotEquals(metadata1.getTraceId(), metadata2.getTraceId());
     }
 
     @Test
@@ -105,7 +112,8 @@ class ExceptionHandlerUtilTest {
         ResponseEntity<Object> response = ExceptionHandlerUtil.handleException("Teste timestamp", 400, null);
         ResponseMetadata metadata = (ResponseMetadata) response.getBody();
 
-        assertNotNull(metadata.get_timestamp());
-        assertFalse(metadata.get_timestamp().isEmpty());
+        assertNotNull(metadata);
+        assertNotNull(metadata.getTimestamp());
+        assertFalse(metadata.getTimestamp().isEmpty());
     }
 }

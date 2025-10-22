@@ -1,4 +1,4 @@
-package br.com.tp.lncr.commons.integrations;
+package br.com.tp.lncr.commons.integrations.customer;
 
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderCustomerDTO;
 

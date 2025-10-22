@@ -16,9 +16,9 @@ class ResponseModelTest {
 
         assertEquals(metadata, response.get_response());
         assertEquals(content, response.get_content());
-        assertEquals("txn-123", response.get_response().get_traceId());
-        assertEquals("2023-07-21T10:00:00Z", response.get_response().get_timestamp());
-        assertEquals("Sucesso", response.get_response().get_message());
+        assertEquals("txn-123", response.get_response().getTraceId());
+        assertEquals("2023-07-21T10:00:00Z", response.get_response().getTimestamp());
+        assertEquals("Sucesso", response.get_response().getMessage());
     }
 
     @Test
@@ -29,9 +29,9 @@ class ResponseModelTest {
 
         assertNotNull(response.get_response());
         assertEquals(content, response.get_content());
-        assertNotNull(response.get_response().get_traceId());
-        assertNotNull(response.get_response().get_timestamp());
-        assertNull(response.get_response().get_message());
+        assertNotNull(response.get_response().getTraceId());
+        assertNotNull(response.get_response().getTimestamp());
+        assertNull(response.get_response().getMessage());
     }
 
     @Test
@@ -60,9 +60,9 @@ class ResponseModelTest {
         ResponseModel<String> response = new ResponseModel<>(metadata, content);
 
         assertSame(metadata, response.get_response());
-        assertEquals("txn-456", response.get_response().get_traceId());
-        assertEquals("2023-07-21T11:00:00Z", response.get_response().get_timestamp());
-        assertEquals("Processado", response.get_response().get_message());
+        assertEquals("txn-456", response.get_response().getTraceId());
+        assertEquals("2023-07-21T11:00:00Z", response.get_response().getTimestamp());
+        assertEquals("Processado", response.get_response().getMessage());
     }
 
     @Test
@@ -95,8 +95,8 @@ class ResponseModelTest {
 
         ResponseModel<String> response = new ResponseModel<>(content);
 
-        assertNotNull(response.get_response().get_timestamp());
-        assertFalse(response.get_response().get_timestamp().isEmpty());
+        assertNotNull(response.get_response().getTimestamp());
+        assertFalse(response.get_response().getTimestamp().isEmpty());
     }
 
     @Test
@@ -104,7 +104,7 @@ class ResponseModelTest {
         ResponseModel<String> response1 = new ResponseModel<>("Conteúdo 1");
         ResponseModel<String> response2 = new ResponseModel<>("Conteúdo 2");
 
-        assertNotEquals(response1.get_response().get_traceId(),
-                       response2.get_response().get_traceId());
+        assertNotEquals(response1.get_response().getTraceId(),
+                       response2.get_response().getTraceId());
     }
 }
