@@ -22,17 +22,15 @@ permissions:
   actions: write
 
 env:
+  APP_DOMAIN: 'commons'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_ACTOR: ${{ github.actor}}
   LNCR_MAVEN_ACTOR: ${{ secrets.LNCR_MAVEN_ACTOR }}
   LNCR_MAVEN_PAT: ${{ secrets.LNCR_MAVEN_PAT }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   MAVEN_SETTINGS_PATH: 'templates/maven_settings.xml'
-  MAVEN_POM_PATH: 'commons/pom.xml'
-  JACOCO_REPORT_PATH: 'commons/target/site/jacoco/jacoco.xml'
-
-
-
+  MAVEN_POM_PATH: "${APP_DOMAIN}/pom.xml"
+  JACOCO_REPORT_PATH: "${APP_DOMAIN}/target/site/jacoco/jacoco.xml"
 
 jobs:
   build:
