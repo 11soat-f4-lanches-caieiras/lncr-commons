@@ -29,8 +29,8 @@ env:
   LNCR_MAVEN_PAT: ${{ secrets.LNCR_MAVEN_PAT }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   MAVEN_SETTINGS_PATH: 'templates/maven_settings.xml'
-  MAVEN_POM_PATH: "${APP_DOMAIN}/pom.xml"
-  JACOCO_REPORT_PATH: "${APP_DOMAIN}/target/site/jacoco/jacoco.xml"
+  MAVEN_POM_PATH: "${{ env.APP_DOMAIN }}/pom.xml"
+  JACOCO_REPORT_PATH: "${{ env.APP_DOMAIN }}/target/site/jacoco/jacoco.xml"
 
 jobs:
   build:
