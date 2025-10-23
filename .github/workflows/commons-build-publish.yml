@@ -1,4 +1,4 @@
-name: Build and Public lncr-commons
+name: Build and Publish lncr-commons
 on:
   push:
     branches: [ develop ]
@@ -261,7 +261,7 @@ jobs:
           MAVEN_POM_PATH: ${{ env.MAVEN_POM_PATH }}
           GITHUB_ACTOR: ${{ env.GITHUB_ACTOR }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn deploy -f $MAVEN_POM_PATH -DskipTests
+        run: mvn deploy -s $MAVEN_SETTINGS_PATH -f $MAVEN_POM_PATH -DskipTests
 
 
       - name: Download do artefato construído
