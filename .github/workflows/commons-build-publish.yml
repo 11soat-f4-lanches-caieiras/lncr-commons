@@ -23,8 +23,15 @@ permissions:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_ACTOR: ${{ github.actor}}
+  LNCR_MAVEN_ACTOR: ${{ secrets.LNCR_MAVEN_ACTOR }}
+  LNCR_MAVEN_PAT: ${{ secrets.LNCR_MAVEN_PAT }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+  MAVEN_SETTINGS_PATH: 'files/maven_settings.xml'
+  MAVEN_POM_PATH: 'commons/pom.xml'
+  JACOCO_REPORT_PATH: 'commons/target/site/jacoco/jacoco.xml'
+
+
 
 
 jobs:
@@ -55,16 +62,18 @@ jobs:
       - name: Análise SonarQube
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-          BRANCH_NAME: ${{ github.ref_name }}
+          MAVEN_SETTINGS_PATH: ${{ env.MAVEN_SETTINGS_PATH }}
+          MAVEN_POM_PATH: ${{ env.MAVEN_POM_PATH }}
         run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -f commons/pom.xml -Pcoverage
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -s $MAVEN_SETTINGS_PATH -f $MAVEN_POM_PATH -Pcoverage
 
       - name: Cobertura de Testes Jacoco & Sonar
+        env:
+          JACOCO_REPORT_PATH: ${{ env.JACOCO_REPORT_PATH }}
         run: |
-          if [ -f commons/target/site/jacoco/jacoco.xml ]; then
-            COVERED=$(grep -oP 'counter type="INSTRUCTION"[^>]+covered="\K[0-9]+' commons/target/site/jacoco/jacoco.xml | awk '{s+=$1} END {print s}')
-            MISSED=$(grep -oP 'counter type="INSTRUCTION"[^>]+missed="\K[0-9]+' commons/target/site/jacoco/jacoco.xml | awk '{s+=$1} END {print s}')
+          if [ -f $JACOCO_REPORT_PATH ]; then
+            COVERED=$(grep -oP 'counter type="INSTRUCTION"[^>]+covered="\K[0-9]+' $JACOCO_REPORT_PATH | awk '{s+=$1} END {print s}')
+            MISSED=$(grep -oP 'counter type="INSTRUCTION"[^>]+missed="\K[0-9]+' $JACOCO_REPORT_PATH | awk '{s+=$1} END {print s}')
             if [[ "$COVERED" =~ ^[0-9]+$ ]] && [[ "$MISSED" =~ ^[0-9]+$ ]] && [ $((COVERED + MISSED)) -ne 0 ]; then
               PERCENT=$(awk "BEGIN {printf \"%.2f\", 100 * $COVERED / ($COVERED + $MISSED)}")
               echo "Cobertura de instruções: $PERCENT%"
@@ -96,12 +105,18 @@ jobs:
           fi
 
       - name: Construir JAR
-        run: mvn clean package -f commons/pom.xml -DskipTests
+        env:
+          MAVEN_SETTINGS_PATH: ${{ env.MAVEN_SETTINGS_PATH }}
+          MAVEN_POM_PATH: ${{ env.MAVEN_POM_PATH }}
+
+        run: mvn clean package -s $MAVEN_SETTINGS_PATH -f $MAVEN_POM_PATH -DskipTests
 
       - name: Obter versão do pom.xml
+        env:
+          MAVEN_POM_PATH: ${{ env.MAVEN_POM_PATH }}
         id: get_version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f commons/pom.xml)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f $MAVEN_POM_PATH)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Upload JAR como artefato
@@ -132,9 +147,11 @@ jobs:
           server-password: GITHUB_TOKEN
 
       - name: Obter versão do pom.xml
+        env:
+          MAVEN_POM_PATH: ${{ env.MAVEN_POM_PATH }}
         id: get_version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f commons/pom.xml)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f $MAVEN_POM_PATH)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Verificar se pacote existe
@@ -236,15 +253,19 @@ jobs:
           fi
 
       - name: Validar configurações Maven
+        env:
+          MAVEN_POM_PATH: ${{ env.MAVEN_POM_PATH }}
         run: |
           echo "Validando configuração Maven para GitHub Packages..."
-          mvn help:effective-settings -f commons/pom.xml | grep -A 10 -B 10 github || true
+          mvn help:effective-settings -f $MAVEN_POM_PATH | grep -A 10 -B 10 github || true
 
       - name: Publicar no GitHub Packages
-        run: mvn deploy -f commons/pom.xml -DskipTests
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
+          MAVEN_POM_PATH: ${{ env.MAVEN_POM_PATH }}
+          GITHUB_ACTOR: ${{ env.GITHUB_ACTOR }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn deploy -f $MAVEN_POM_PATH -DskipTests
+
 
       - name: Download do artefato construído
         uses: actions/download-artifact@v4
