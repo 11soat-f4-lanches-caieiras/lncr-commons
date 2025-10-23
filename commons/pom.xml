@@ -9,21 +9,24 @@
     <packaging>jar</packaging>
     <distributionManagement>
         <repository>
-            <id>github</id>
+            <id>lncr-commons</id>
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/11soat-f4-lanches-caieiras/lncr-commons</url>
         </repository>
     </distributionManagement>
-    <!--<repositories>
+    <repositories>
         <repository>
-            <id>github</id>
+            <id>lncr-core</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/11soat-f3-lanches-caieiras/lncr-core</url>
+            <url>https://maven.pkg.github.com/11soat-f4-lanches-caieiras/lncr-core</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
-    </repositories>-->
+    </repositories>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
@@ -31,7 +34,7 @@
         <spring-boot.version>3.4.5</spring-boot.version>
         <mockito.version>5.2.0</mockito.version>
         <!--suppress UnresolvedMavenProperty -->
-        <sonar.branch.name>${BRANCH_NAME}</sonar.branch.name>
+        <sonar.branch.name>master</sonar.branch.name> <!--fixado branch como master, pois Free Tier do SonarQube aceita somente uma branch-->
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
         <sonar.organization>11soat-f4-lanches-caieiras</sonar.organization>
