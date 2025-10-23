@@ -1,4 +1,4 @@
-name: Build and Public lncr-commons
+name: Build and Publish lncr-commons
 on:
   push:
     branches: [ develop ]
