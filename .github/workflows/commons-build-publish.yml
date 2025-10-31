@@ -29,7 +29,7 @@ env:
   LNCR_MAVEN_ACTOR: ${{ secrets.LNCR_MAVEN_ACTOR }}
   LNCR_MAVEN_PAT: ${{ secrets.LNCR_MAVEN_PAT }}
   MAVEN_POM_PATH: '${{ vars.DOMAIN }}/pom.xml'
-  MAVEN_SETTINGS_PATH: '${{ vars.DOMAIN }}/maven_settings.xml'
+  MAVEN_SETTINGS_PATH: 'templates/maven_settings.xml'
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
