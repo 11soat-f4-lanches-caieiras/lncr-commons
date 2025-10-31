@@ -1,4 +1,4 @@
-package br.com.tp.lncr.commons.bdd.utils;
+package br.com.tp.lncr.commons.bdd;
 
 import br.com.tp.lncr.commons.integrations.IntegrationException;
 import br.com.tp.lncr.commons.utils.IntegrationUtil;
