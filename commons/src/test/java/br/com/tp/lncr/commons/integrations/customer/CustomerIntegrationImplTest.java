@@ -48,13 +48,76 @@ class CustomerIntegrationImplTest {
             when(integrationMapper.toCustomerOrderCustomerDTO(any(CustomerDTO.class)))
                     .thenReturn(expectedResult);
 
-            CustomerOrderCustomerDTO result = customerIntegration.getCustomerDetails(1);
+            CustomerOrderCustomerDTO result = integrationMapper.toCustomerOrderCustomerDTO(customerIntegration.getCustomerDetails(1));
 
             assertNotNull(result);
             assertEquals(1, result.getId());
             assertEquals("João Silva", result.getName());
             verify(integrationMapper).toCustomerOrderCustomerDTO(any(CustomerDTO.class));
             mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://customer-service/1"), eq(CustomerDTO.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsComSucesso() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(1);
+        customerDTO.setName("João Silva");
+        customerDTO.setEmail("joao.silva@email.com");
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetails(1);
+
+            assertNotNull(result);
+            assertEquals(1, result.getId());
+            assertEquals("João Silva", result.getName());
+            assertEquals("joao.silva@email.com", result.getEmail());
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://customer-service/1"), eq(CustomerDTO.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsComIdZero() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(0);
+        customerDTO.setName("Cliente Anônimo");
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetails(0);
+
+            assertNotNull(result);
+            assertEquals(0, result.getId());
+            assertEquals("Cliente Anônimo", result.getName());
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://customer-service/0"), eq(CustomerDTO.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsComIdNegativo() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(-1);
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetails(-1);
+
+            assertNotNull(result);
+            assertEquals(-1, result.getId());
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://customer-service/-1"), eq(CustomerDTO.class)));
         }
     }
 
@@ -75,7 +138,7 @@ class CustomerIntegrationImplTest {
             when(integrationMapper.toCustomerOrderCustomerDTO(any(CustomerDTO.class)))
                     .thenReturn(expectedResult);
 
-            CustomerOrderCustomerDTO result = customerIntegration.getCustomerDetails(0);
+            CustomerOrderCustomerDTO result = integrationMapper.toCustomerOrderCustomerDTO(customerIntegration.getCustomerDetails(0));
 
             assertNotNull(result);
             verify(integrationMapper).toCustomerOrderCustomerDTO(any(CustomerDTO.class));
@@ -199,6 +262,121 @@ class CustomerIntegrationImplTest {
             assertTrue(result.stream().allMatch(Objects::isNull));
             verify(integrationMapper, times(2)).toCustomerOrderCustomerDTO(any(CustomerDTO.class));
             mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://customer-service/1,2"), any(TypeReference.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsPorDocumentoComSucesso() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(1);
+        customerDTO.setName("João Silva");
+        customerDTO.setDocumentNumber("12345678900");
+        customerDTO.setEmail("joao.silva@email.com");
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetailsByDocument("12345678900");
+
+            assertNotNull(result);
+            assertEquals(1, result.getId());
+            assertEquals("João Silva", result.getName());
+            assertEquals("12345678900", result.getDocumentNumber());
+            assertEquals("joao.silva@email.com", result.getEmail());
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(
+                    eq("http://customer-service/documentNumber/12345678900"),
+                    eq(CustomerDTO.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsPorDocumentoCNPJ() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(2);
+        customerDTO.setName("Empresa XYZ LTDA");
+        customerDTO.setDocumentNumber("12345678000199");
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetailsByDocument("12345678000199");
+
+            assertNotNull(result);
+            assertEquals(2, result.getId());
+            assertEquals("Empresa XYZ LTDA", result.getName());
+            assertEquals("12345678000199", result.getDocumentNumber());
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(
+                    eq("http://customer-service/documentNumber/12345678000199"),
+                    eq(CustomerDTO.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsPorDocumentoComCaracteresEspeciais() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(3);
+        customerDTO.setName("Maria Santos");
+        customerDTO.setDocumentNumber("123.456.789-00");
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetailsByDocument("123.456.789-00");
+
+            assertNotNull(result);
+            assertEquals(3, result.getId());
+            assertEquals("Maria Santos", result.getName());
+            assertEquals("123.456.789-00", result.getDocumentNumber());
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(
+                    eq("http://customer-service/documentNumber/123.456.789-00"),
+                    eq(CustomerDTO.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsPorDocumentoVazio() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetailsByDocument("");
+
+            assertNotNull(result);
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(
+                    eq("http://customer-service/documentNumber/"),
+                    eq(CustomerDTO.class)));
+        }
+    }
+
+    @Test
+    void deveBuscarCustomerDetailsPorDocumentoNulo() {
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
+
+        CustomerDTO customerDTO = new CustomerDTO();
+
+        try (MockedStatic<IntegrationUtil> mockedUtil = mockStatic(IntegrationUtil.class)) {
+            mockedUtil.when(() -> IntegrationUtil.getForObject(anyString(), eq(CustomerDTO.class)))
+                    .thenReturn(customerDTO);
+
+            CustomerDTO result = customerIntegration.getCustomerDetailsByDocument(null);
+
+            assertNotNull(result);
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(
+                    eq("http://customer-service/documentNumber/null"),
+                    eq(CustomerDTO.class)));
         }
     }
 }
