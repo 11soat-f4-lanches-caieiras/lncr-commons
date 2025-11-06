@@ -1,7 +1,5 @@
 package br.com.tp.lncr.commons.model;
 
-import br.com.tp.lncr.core.model.ResponseMetadata;
-
 public class ResponseModel<T> {
     private final ResponseMetadata _response;
     private final T _content;

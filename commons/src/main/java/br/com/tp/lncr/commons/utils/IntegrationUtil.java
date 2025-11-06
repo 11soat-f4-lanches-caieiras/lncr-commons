@@ -116,7 +116,7 @@ public class IntegrationUtil {
         mapper.findAndRegisterModules();
         try {
             JsonNode root = mapper.readTree(body);
-            JsonNode contentNode = root.path("_content");
+            JsonNode contentNode = root.path("content");
             return mapper.treeToValue(contentNode, classType);
         } catch (JsonProcessingException e) {
             throw new IntegrationException("Erro ao mapear conteúdo na integração: " + classType.getSimpleName(),500);

@@ -1,7 +1,5 @@
 package br.com.tp.lncr.commons.model;
 
-import br.com.tp.lncr.core.model.ResponseMetadata;
-
 import java.util.List;
 
 public class ResponseListModel<T> {

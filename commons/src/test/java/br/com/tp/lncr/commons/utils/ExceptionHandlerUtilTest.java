@@ -1,6 +1,6 @@
 package br.com.tp.lncr.commons.utils;
 
-import br.com.tp.lncr.core.model.ResponseMetadata;
+import br.com.tp.lncr.commons.model.ResponseMetadata;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -38,7 +38,7 @@ public class CustomerIntegrationImpl implements CustomerIntegration {
     @Override
     public List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList) {
         String ids = customerIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
-        String url = integrationConfig.getCustomersListUrl() + "/" + ids;
+        String url = integrationConfig.getCustomersUrl() + "/listIds/" + ids;
         List<CustomerDTO> customerDTOList =  IntegrationUtil.getForObject(url, new TypeReference<>() {});
         return customerDTOList.stream().map(integrationMapper::toCustomerOrderCustomerDTO).toList();
     }

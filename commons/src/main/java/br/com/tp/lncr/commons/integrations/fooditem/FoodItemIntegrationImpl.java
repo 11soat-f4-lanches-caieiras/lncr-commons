@@ -25,7 +25,7 @@ public class FoodItemIntegrationImpl implements FoodItemIntegration {
     @Override
     public List<CustomerOrderFoodItemDTO> getFoodItemDetailList(List<Integer> foodItemIdList) {
         String ids = foodItemIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
-        String url = integrationConfig.getFoodItemsListUrl() + "/" + ids;
+        String url = integrationConfig.getFoodItemsUrl() + "/listIds/" + ids;
         List<FoodItemDTO> foodItemDTOList = IntegrationUtil.getForObject(url, new TypeReference<>() {
         });
         return foodItemDTOList.stream().map(integrationMapper::toCustomerOrderFoodItemDTO).toList();
