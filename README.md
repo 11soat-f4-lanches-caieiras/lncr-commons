@@ -1,22 +1,22 @@
-# Módulo Core
+# Módulo Commons
 
-Este documento contém as configurações necessárias para utilizar o artefato `lncr-core` publicado no GitHub Packages em outros projetos.
+Este documento contém as configurações necessárias para utilizar o artefato `lncr-commons` publicado no GitHub Packages em outros projetos.
 
-## 1. Sobre o lncr-core
-O `lncr-core` é um módulo que contém as regras de negócio, entidades do domínio, interfaces dos casos de uso da aplicação Lanches Caieiras e bibliotecas de uso comum.
-Ele está publicado no GitHub Packages e pode ser utilizado como dependência em projetos Mave.
+## 1. Sobre o lncr-commons
+O `lncr-commons` é um módulo que contém classes utilitárias, configurações compartilhadas, integrações e componentes comuns utilizados pelos microserviços da aplicação Lanches Caieiras.
+Ele está publicado no GitHub Packages e pode ser utilizado como dependência em projetos Maven.
 
 
-## 2. Utilizando lncr-core nos projetos
-Para configuar o artefato em outros projetos, adicione no `pom.xml` do seu projeto:
+## 2. Utilizando lncr-commons nos projetos
+Para configurar o artefato em outros projetos, adicione no `pom.xml` do seu projeto:
 
 ```xml
 <project>
 <repositories>
     <repository>
-        <id>github</id>
+        <id>lncr-commons</id>
         <name>GitHub Packages</name>
-        <url>https://maven.pkg.github.com/11soat-f3-lanches-caieiras/lncr-core</url>
+        <url>https://maven.pkg.github.com/11soat-f4-lanches-caieiras/lncr-commons</url>
         <releases>
             <updatePolicy>always</updatePolicy>
         </releases>
@@ -27,8 +27,8 @@ Para configuar o artefato em outros projetos, adicione no `pom.xml` do seu proje
    <dependencies>
        <dependency>
            <groupId>br.com.tp.lncr</groupId>
-           <artifactId>core</artifactId>
-           <version>2.0</version>
+           <artifactId>commons</artifactId>
+           <version>1.0</version>
        </dependency>
    </dependencies>
 </dependencyManagement>
@@ -54,7 +54,7 @@ Para configuar o artefato em outros projetos, adicione no `pom.xml` do seu proje
     <!-- Configuração de servidores para autenticação -->
     <servers>
         <server>
-            <id>github</id>
+            <id>lncr-commons</id>
             <username>${env.GITHUB_USERNAME}</username>
             <password>${env.GITHUB_TOKEN}</password>
         </server>
@@ -105,7 +105,7 @@ Para configuar o artefato em outros projetos, adicione no `pom.xml` do seu proje
 Execute o seguinte comando para verificar se tudo está funcionando:
 
 ```bash
-# Navegar até um projeto que usa o lncr-core
+# Navegar até um projeto que usa o lncr-commons
 cd seu-projeto
 
 # Limpar cache local e baixar dependências
@@ -158,9 +158,9 @@ meu-projeto/
     
     <repositories>
         <repository>
-            <id>github</id>
+            <id>lncr-commons</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/11soat-f3-lanches-caieiras/lncr-core</url>
+            <url>https://maven.pkg.github.com/11soat-f4-lanches-caieiras/lncr-commons</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -170,8 +170,8 @@ meu-projeto/
     <dependencies>
         <dependency>
             <groupId>br.com.tp.lncr</groupId>
-            <artifactId>core</artifactId>
-            <version>2.0</version>
+            <artifactId>commons</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
     
@@ -183,18 +183,18 @@ meu-projeto/
 ```java
 package com.exemplo;
 
-import br.com.tp.lncr.core.domain.entities.Cliente;
-import br.com.tp.lncr.core.domain.valueobjects.CPF;
+import br.com.tp.lncr.commons.config.AwsConfig;
+import br.com.tp.lncr.commons.integrations.customers.CustomerIntegration;
 
 public class MinhaClasse {
     public static void main(String[] args) {
-        try {
-            CPF cpf = new CPF("12345678901");
-            Cliente cliente = new Cliente("João Silva", "joao@email.com", cpf);
-            System.out.println("Cliente criado: " + cliente.getNome());
-        } catch (Exception e) {
-            System.err.println("Erro ao criar cliente: " + e.getMessage());
-        }
+        // Exemplo de uso de configurações comuns
+        AwsConfig awsConfig = new AwsConfig();
+        System.out.println("Configuração AWS carregada");
+        
+        // Exemplo de uso de integrações
+        CustomerIntegration customerIntegration = new CustomerIntegration();
+        System.out.println("Integração com Customer disponível");
     }
 }
 ```
