@@ -33,7 +33,7 @@ class FoodItemIntegrationImplTest {
 
     @Test
     void deveBuscarDetalhesFoodItemsComSucesso() {
-        when(integrationConfig.getFoodItemsListUrl()).thenReturn("http://fooditem-service");
+        when(integrationConfig.getFoodItemsUrl()).thenReturn("http://fooditem-service");
 
         List<Integer> foodItemIds = Arrays.asList(1, 2, 3);
 
@@ -73,7 +73,7 @@ class FoodItemIntegrationImplTest {
 
     @Test
     void deveBuscarDetalhesFoodItemsComListaVazia() {
-        when(integrationConfig.getFoodItemsListUrl()).thenReturn("http://fooditem-service");
+        when(integrationConfig.getFoodItemsUrl()).thenReturn("http://fooditem-service");
 
         List<Integer> foodItemIds = Collections.emptyList();
         List<FoodItemDTO> mockFoodItems = Collections.emptyList();
@@ -93,7 +93,7 @@ class FoodItemIntegrationImplTest {
 
     @Test
     void deveBuscarDetalhesFoodItemsComUmItem() {
-        when(integrationConfig.getFoodItemsListUrl()).thenReturn("http://fooditem-service");
+        when(integrationConfig.getFoodItemsUrl()).thenReturn("http://fooditem-service");
 
         List<Integer> foodItemIds = List.of(1);
 
@@ -127,7 +127,7 @@ class FoodItemIntegrationImplTest {
 
     @Test
     void deveProcessarFoodItemsNulosCorretamente() {
-        when(integrationConfig.getFoodItemsListUrl()).thenReturn("http://fooditem-service");
+        when(integrationConfig.getFoodItemsUrl()).thenReturn("http://fooditem-service");
 
         List<Integer> foodItemIds = Arrays.asList(1, 2);
 

@@ -16,15 +16,6 @@ class IntegrationConfigTest {
         assertEquals(url, config.getCustomersUrl());
     }
 
-    @Test
-    void deveDefinirEObterCustomersListUrl() {
-        IntegrationConfig config = new IntegrationConfig();
-        String url = "http://localhost:8080/customers/list";
-
-        config.setCustomersListUrl(url);
-
-        assertEquals(url, config.getCustomersListUrl());
-    }
 
     @Test
     void deveDefinirEObterCustomerOrdersUrl() {
@@ -46,15 +37,6 @@ class IntegrationConfigTest {
         assertEquals(url, config.getFoodItemsUrl());
     }
 
-    @Test
-    void deveDefinirEObterFoodItemsListUrl() {
-        IntegrationConfig config = new IntegrationConfig();
-        String url = "http://localhost:8080/fooditems/list";
-
-        config.setFoodItemsListUrl(url);
-
-        assertEquals(url, config.getFoodItemsListUrl());
-    }
 
     @Test
     void deveDefinirEObterKitchenOrdersUrl() {

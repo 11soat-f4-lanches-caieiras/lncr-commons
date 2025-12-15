@@ -148,7 +148,7 @@ class CustomerIntegrationImplTest {
 
     @Test
     void deveBuscarListaDetalhesCustomersComSucesso() {
-        when(integrationConfig.getCustomersListUrl()).thenReturn("http://customer-service");
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
 
         List<Integer> customerIds = Arrays.asList(1, 2, 3);
 
@@ -186,7 +186,7 @@ class CustomerIntegrationImplTest {
 
     @Test
     void deveBuscarListaDetalhesCustomersComListaVazia() {
-        when(integrationConfig.getCustomersListUrl()).thenReturn("http://customer-service");
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
 
         List<Integer> customerIds = Collections.emptyList();
         List<CustomerDTO> mockCustomers = Collections.emptyList();
@@ -206,7 +206,7 @@ class CustomerIntegrationImplTest {
 
     @Test
     void deveBuscarListaDetalhesCustomersComUmCustomer() {
-        when(integrationConfig.getCustomersListUrl()).thenReturn("http://customer-service");
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
 
         List<Integer> customerIds = List.of(1);
 
@@ -237,7 +237,7 @@ class CustomerIntegrationImplTest {
 
     @Test
     void deveProcessarCustomersNulosCorretamente() {
-        when(integrationConfig.getCustomersListUrl()).thenReturn("http://customer-service");
+        when(integrationConfig.getCustomersUrl()).thenReturn("http://customer-service");
 
         List<Integer> customerIds = Arrays.asList(1, 2);
 
