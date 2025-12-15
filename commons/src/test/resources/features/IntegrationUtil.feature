@@ -43,7 +43,7 @@ Funcionalidade: IntegrationUtil - Utilitário de integração
     Então devo receber uma resposta do servidor
 
   Cenário: Extrair conteúdo de integração
-    Dado um corpo de resposta com campo _content
+    Dado um corpo de resposta com campo content
     Quando extraio o conteúdo da integração
     Então devo receber o objeto mapeado corretamente
 

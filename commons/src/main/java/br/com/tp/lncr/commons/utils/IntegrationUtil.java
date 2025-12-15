@@ -117,6 +117,9 @@ public class IntegrationUtil {
         try {
             JsonNode root = mapper.readTree(body);
             JsonNode contentNode = root.path("content");
+            if (contentNode.isMissingNode() || contentNode.isNull()) {
+                return null;
+            }
             return mapper.treeToValue(contentNode, classType);
         } catch (JsonProcessingException e) {
             throw new IntegrationException("Erro ao mapear conteúdo na integração: " + classType.getSimpleName(),500);
@@ -131,7 +134,10 @@ public class IntegrationUtil {
         mapper.findAndRegisterModules();
         try {
             JsonNode root = mapper.readTree(body);
-            JsonNode contentNode = root.path("_content");
+            JsonNode contentNode = root.path("content");
+            if (contentNode.isMissingNode() || contentNode.isNull()) {
+                return null;
+            }
             return mapper.readValue(contentNode.traverse(), typeReference);
         } catch (Exception e) {
             throw new IntegrationException("Erro ao mapear conteúdo na integração: " + typeReference.getType(), 500);

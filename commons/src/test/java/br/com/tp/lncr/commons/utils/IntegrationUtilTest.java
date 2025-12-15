@@ -218,7 +218,7 @@ class IntegrationUtilTest {
 
     @Test
     void getIntegrationContent_deveExtrairConteudoComSucesso() {
-        String body = "{\"_content\":{\"name\":\"Test\",\"value\":123}}";
+        String body = "{\"content\":{\"name\":\"Test\",\"value\":123}}";
 
         TestDTO result = IntegrationUtil.getIntegrationContent(body, TestDTO.class);
 
@@ -229,7 +229,7 @@ class IntegrationUtilTest {
 
     @Test
     void getIntegrationContent_deveRetornarNuloQuandoContentVazio() {
-        String body = "{\"_content\":{}}";
+        String body = "{\"content\":{}}";
 
         TestDTO result = IntegrationUtil.getIntegrationContent(body, TestDTO.class);
 
@@ -259,7 +259,7 @@ class IntegrationUtilTest {
 
     @Test
     void getIntegrationContent_deveProcessarContentComValoresNulos() {
-        String body = "{\"_content\":{\"name\":null,\"value\":null}}";
+        String body = "{\"content\":{\"name\":null,\"value\":null}}";
 
         TestDTO result = IntegrationUtil.getIntegrationContent(body, TestDTO.class);
 
@@ -286,7 +286,7 @@ class IntegrationUtilTest {
 
     @Test
     void getIntegrationContentList_deveExtrairListaComSucesso() {
-        String body = "{\"_content\":[{\"name\":\"Test1\",\"value\":1},{\"name\":\"Test2\",\"value\":2}]}";
+        String body = "{\"content\":[{\"name\":\"Test1\",\"value\":1},{\"name\":\"Test2\",\"value\":2}]}";
         TypeReference<List<TestDTO>> typeRef = new TypeReference<>() {
         };
 
@@ -302,7 +302,7 @@ class IntegrationUtilTest {
 
     @Test
     void getIntegrationContentList_deveRetornarListaVaziaQuandoContentVazio() {
-        String body = "{\"_content\":[]}";
+        String body = "{\"content\":[]}";
         TypeReference<List<TestDTO>> typeRef = new TypeReference<>() {
         };
 
@@ -349,7 +349,7 @@ class IntegrationUtilTest {
 
     @Test
     void getIntegrationContentList_deveProcessarListaComValoresNulos() {
-        String body = "{\"_content\":[{\"name\":null,\"value\":null}]}";
+        String body = "{\"content\":[{\"name\":null,\"value\":null}]}";
         TypeReference<List<TestDTO>> typeRef = new TypeReference<>() {
         };
 
