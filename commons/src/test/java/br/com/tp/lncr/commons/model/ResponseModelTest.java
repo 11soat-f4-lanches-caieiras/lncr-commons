@@ -1,6 +1,5 @@
 package br.com.tp.lncr.commons.model;
 
-import br.com.tp.lncr.core.model.ResponseMetadata;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

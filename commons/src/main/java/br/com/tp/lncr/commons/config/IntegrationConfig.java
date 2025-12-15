@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "lncr.integration")
 public class IntegrationConfig {
     private String customersUrl;
-    private String customersListUrl;
     private String customerOrdersUrl;
     private String foodItemsUrl;
-    private String foodItemsListUrl;
     private String kitchenOrdersUrl;
     private String paymentsUrl;
     private String notificationUrl;
@@ -21,14 +19,6 @@ public class IntegrationConfig {
 
     public void setCustomersUrl(String customersUrl) {
         this.customersUrl = customersUrl;
-    }
-
-    public String getCustomersListUrl() {
-        return customersListUrl;
-    }
-
-    public void setCustomersListUrl(String customersListUrl) {
-        this.customersListUrl = customersListUrl;
     }
 
     public String getCustomerOrdersUrl() {
@@ -45,14 +35,6 @@ public class IntegrationConfig {
 
     public void setFoodItemsUrl(String foodItemsUrl) {
         this.foodItemsUrl = foodItemsUrl;
-    }
-
-    public String getFoodItemsListUrl() {
-        return foodItemsListUrl;
-    }
-
-    public void setFoodItemsListUrl(String foodItemsListUrl) {
-        this.foodItemsListUrl = foodItemsListUrl;
     }
 
     public String getKitchenOrdersUrl() {

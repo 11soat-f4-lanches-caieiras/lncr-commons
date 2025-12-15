@@ -23,17 +23,23 @@ public class CustomerIntegrationImpl implements CustomerIntegration {
     }
 
     @Override
-    public CustomerOrderCustomerDTO getCustomerDetails(Integer customerId) {
+    public CustomerDTO getCustomerDetails(Integer customerId) {
         String url = integrationConfig.getCustomersUrl()+ "/" + customerId;
-        CustomerDTO customerDTO = IntegrationUtil.getForObject(url, CustomerDTO.class);
-        return this.integrationMapper.toCustomerOrderCustomerDTO(customerDTO);
+        return IntegrationUtil.getForObject(url, CustomerDTO.class);
     }
+
+    @Override
+    public CustomerDTO getCustomerDetailsByDocument(String documentNumber) {
+        String url = integrationConfig.getCustomersUrl()+ "/documentNumber/" + documentNumber;
+        return IntegrationUtil.getForObject(url, CustomerDTO.class);
+    }
+
 
     @Override
     public List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList) {
         String ids = customerIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
-        String url = integrationConfig.getCustomersListUrl() + "/" + ids;
-        List<CustomerDTO> customerDTOList =  IntegrationUtil.getForObject(url, new TypeReference<List<CustomerDTO>>() {});
+        String url = integrationConfig.getCustomersUrl() + "/listIds/" + ids;
+        List<CustomerDTO> customerDTOList =  IntegrationUtil.getForObject(url, new TypeReference<>() {});
         return customerDTOList.stream().map(integrationMapper::toCustomerOrderCustomerDTO).toList();
     }
 }

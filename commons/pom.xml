@@ -32,6 +32,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>3.4.5</spring-boot.version>
+        <jackson.version>2.18.3</jackson.version>
         <mockito.version>5.2.0</mockito.version>
         <sonar.branch.name>master</sonar.branch.name> <!--fixado branch como master, pois Free Tier do SonarQube aceita somente uma branch-->
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -55,6 +56,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -66,7 +74,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.19.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
