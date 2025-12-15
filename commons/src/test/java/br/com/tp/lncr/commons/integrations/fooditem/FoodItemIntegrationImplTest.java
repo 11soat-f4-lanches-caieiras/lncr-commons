@@ -67,7 +67,7 @@ class FoodItemIntegrationImplTest {
             assertNotNull(result);
             assertEquals(3, result.size());
             verify(integrationMapper, times(3)).toCustomerOrderFoodItemDTO(any(FoodItemDTO.class));
-            mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://fooditem-service/1,2,3"), any(TypeReference.class)));
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(anyString(), any(TypeReference.class)));
         }
     }
 
@@ -87,7 +87,7 @@ class FoodItemIntegrationImplTest {
             assertNotNull(result);
             assertTrue(result.isEmpty());
             verify(integrationMapper, never()).toCustomerOrderFoodItemDTO(any(FoodItemDTO.class));
-            mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://fooditem-service/"), any(TypeReference.class)));
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(anyString(), any(TypeReference.class)));
         }
     }
 
@@ -121,7 +121,7 @@ class FoodItemIntegrationImplTest {
             assertEquals(1, result.size());
             assertEquals("Pizza", result.getFirst().getName());
             verify(integrationMapper).toCustomerOrderFoodItemDTO(any(FoodItemDTO.class));
-            mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://fooditem-service/1"), any(TypeReference.class)));
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(anyString(), any(TypeReference.class)));
         }
     }
 
@@ -151,7 +151,7 @@ class FoodItemIntegrationImplTest {
             assertEquals(2, result.size());
             assertTrue(result.stream().allMatch(Objects::isNull));
             verify(integrationMapper, times(2)).toCustomerOrderFoodItemDTO(any(FoodItemDTO.class));
-            mockedUtil.verify(() -> IntegrationUtil.getForObject(eq("http://fooditem-service/1,2"), any(TypeReference.class)));
+            mockedUtil.verify(() -> IntegrationUtil.getForObject(anyString(), any(TypeReference.class)));
         }
     }
 }

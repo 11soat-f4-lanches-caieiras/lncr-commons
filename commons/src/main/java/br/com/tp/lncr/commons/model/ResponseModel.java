@@ -1,25 +1,25 @@
 package br.com.tp.lncr.commons.model;
 
 public class ResponseModel<T> {
-    private final ResponseMetadata _response;
-    private final T _content;
+    private final ResponseMetadata response;
+    private final T content;
 
     public ResponseModel(ResponseMetadata response, T content) {
-        this._response = response;
-        this._content = content;
+        this.response = response;
+        this.content = content;
     }
 
     public ResponseModel(T content) {
-        this._response = new ResponseMetadata();
-        this._content = content;
+        this.response = new ResponseMetadata();
+        this.content = content;
     }
 
     public ResponseMetadata getResponse() {
-        return _response;
+        return response;
     }
 
     public T getContent() {
-        return _content;
+        return content;
     }
 
 

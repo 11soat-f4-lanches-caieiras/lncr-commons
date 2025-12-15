@@ -155,9 +155,9 @@ public class IntegrationUtilSteps {
         assertNull(excecaoCapturada);
     }
 
-    @Dado("um corpo de resposta com campo _content")
-    public void umCorpoDeRespostaComCampo_content() {
-        corpoResposta = "{\"_content\":{\"nome\":\"Teste\",\"valor\":789}}";
+    @Dado("um corpo de resposta com campo content")
+    public void umCorpoDeRespostaComCampocontent() {
+        corpoResposta = "{\"content\":{\"nome\":\"Teste\",\"valor\":789}}";
     }
 
     @Quando("extraio o conteúdo da integração")
